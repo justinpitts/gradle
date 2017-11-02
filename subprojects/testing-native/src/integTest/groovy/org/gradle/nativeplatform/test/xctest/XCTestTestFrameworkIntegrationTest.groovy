@@ -114,7 +114,7 @@ allprojects { p ->
         }
 
         private static final String FAILING_TEST = """
-            fputs("some error output", __stderrp)
+            fputs("some error output", stderr)
             XCTAssert(false, "test failure message")
         """
 
