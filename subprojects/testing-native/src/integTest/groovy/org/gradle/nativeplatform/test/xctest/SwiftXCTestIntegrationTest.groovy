@@ -213,7 +213,6 @@ apply plugin: 'swift-library'
 
         when:
         testBundle.applyChangesToProject(testDirectory)
-        withDebugLogging()
         succeeds("test")
 
         then:
