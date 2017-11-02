@@ -17,6 +17,7 @@
 package org.gradle.nativeplatform.test.xctest
 
 import org.gradle.integtests.fixtures.SourceFile
+import org.gradle.internal.os.OperatingSystem
 import org.gradle.nativeplatform.fixtures.AvailableToolChains
 import org.gradle.nativeplatform.fixtures.ToolChainRequirement
 import org.gradle.nativeplatform.fixtures.app.XCTestCaseElement
@@ -98,7 +99,7 @@ allprojects { p ->
                 String testSuiteName = "SomeTest"
                 List<XCTestCaseElement> testCases = [testCase("testFail", FAILING_TEST, true)]
                 String moduleName = "AppTest"
-            }.withImport("Darwin"),
+            }.withImport(libcModuleName),
 
             new XCTestSourceFileElement() {
                 String testSuiteName = "SomeOtherTest"
@@ -109,12 +110,19 @@ allprojects { p ->
 
         @Override
         List<SourceFile> getFiles() {
-            super.files + [emptyInfoPlist()]
+            super.files
         }
 
         private static final String FAILING_TEST = """
             fputs("some error output", __stderrp)
             XCTAssert(false, "test failure message")
         """
+
+        private static String getLibcModuleName() {
+            if (OperatingSystem.current().macOsX) {
+                return "Darwin"
+            }
+            return "Glibc"
+        }
     }
 }
