@@ -253,7 +253,9 @@ apply plugin: 'swift-library'
             }
             xctest {
                 source.from 'Tests'
-                resourceDir.set(file('Tests'))
+                if (${OperatingSystem.canonicalName}.current().macOsX) {
+                    resourceDir.set(file('Tests'))
+                }
             }
          """
 
