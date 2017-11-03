@@ -45,4 +45,11 @@ public interface DependencyMetadata {
      * repository. For example the version name corresponds to a directory name in a Maven like repository.
      */
     String getVersion();
+
+    /**
+     * Adjust the version constraints of the dependency.
+     *
+     * @param version version in string notation
+     */
+    DependencyMetadata setVersion(String version);
 }
